@@ -1,6 +1,6 @@
-# Re(s)trace - REST Trace Collector for build pipelines
+# Re(s)trace - REST Open Telemetry Trace Collector for build pipelines
 
-A super simple application to build OTEL traces from REST APIs and send them off to a collector allowing
+A super simple application to build Open Telemetry (OTEL) traces from REST APIs and send them off to a collector allowing
 to process and visualize statistics about pipeline executions.
 
 ## Why?
@@ -22,3 +22,12 @@ With Restrace you can collect traces that allow you to calculate the first two:
 - Deployment Frequency ✅
 - Lead Time for Changes ✅
 
+With the typical monitoring tools used for monitoring Service Level Objectives you can calculate Mean Time to Recovery.
+Change Failure Rate is a bit more tricky to calculate, but you can use the traces to get an idea of how often
+your pipelines fail - if that correlates with failures in production, then you have a good indicator.
+
+## Next Steps
+- [ ] Add more documentation, specifically a prepared Grafana board
+- [ ] Add support for more metrics
+- [ ] Add more configuration options
+- [ ] Make it easier to queue up traces for sending when the collector is not available
