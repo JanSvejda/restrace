@@ -7,6 +7,8 @@ import jakarta.annotation.PreDestroy
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
+import org.springframework.context.annotation.Bean
+import org.springframework.web.client.RestClient
 
 @SpringBootApplication
 @EnableOpenTelemetry
@@ -24,6 +26,12 @@ class RestraceApplication {
     fun destroy() {
         log.info { "restrace application stopped" }
     }
+
+    @Bean
+    fun restClient(): RestClient =
+        RestClient
+            .builder()
+            .build()
 }
 
 fun main(args: Array<String>) {

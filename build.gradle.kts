@@ -36,6 +36,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
     implementation("io.github.oshai:kotlin-logging-jvm:5.1.0")
+    implementation("com.michael-bull.kotlin-result:kotlin-result:2.0.0")
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     // developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
@@ -43,6 +45,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.wiremock.integrations:wiremock-spring-boot:3.3.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter")
 }
