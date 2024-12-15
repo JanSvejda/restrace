@@ -8,5 +8,5 @@ import org.springframework.boot.with
 class TestRestraceApplication
 
 fun main(args: Array<String>) {
-	fromApplication<RestraceApplication>().with(TestRestraceApplication::class).run(*args)
+    fromApplication<RestraceApplication>().with(TestRestraceApplication::class).run(*args)
 }

@@ -1,42 +1,15 @@
-package com.jsv.restrace
+package com.jsv.restrace.builds
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
-import io.github.oshai.kotlinlogging.KotlinLogging.logger
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.opentelemetry.api.trace.Span
 import io.opentelemetry.api.trace.StatusCode
 import io.opentelemetry.instrumentation.annotations.WithSpan
-import io.opentelemetry.instrumentation.spring.autoconfigure.EnableOpenTelemetry
-import jakarta.annotation.PostConstruct
-import jakarta.annotation.PreDestroy
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-
-@SpringBootApplication
-@EnableOpenTelemetry
-class RestraceApplication {
-    val log = logger {}
-
-    // log the application start and end on spring initialization
-    @PostConstruct
-    fun init() {
-        log.info { "restrace application started" }
-    }
-
-    @PreDestroy
-    fun destroy() {
-        log.info { "restrace application stopped" }
-    }
-
-}
-
-fun main(args: Array<String>) {
-    runApplication<RestraceApplication>(*args)
-}
 
 @JsonNaming(PropertyNamingStrategies.KebabCaseStrategy::class)
 data class Pipeline(
@@ -46,20 +19,26 @@ data class Pipeline(
     val branch: String,
     val startTime: Long,
     val endTime: Long,
-    val stages: List<Stage>
+    val stages: List<Stage>,
 )
 
-data class Stage(val name: String, val status: String, val startTime: Long, val endTime: Long)
+data class Stage(
+    val name: String,
+    val status: String,
+    val startTime: Long,
+    val endTime: Long,
+)
 
 @RestController
 @RequestMapping("/api/v1")
-class CollectionService {
-
-    val log = logger {}
+class BuildsService {
+    val log = KotlinLogging.logger {}
 
     @PostMapping("/collect/build")
     @WithSpan("dora")
-    fun collect(@RequestBody pipeline: Pipeline): String {
+    fun collect(
+        @RequestBody pipeline: Pipeline,
+    ): String {
         val span = Span.current()
         span.setStatus(StatusCode.OK)
         span.setAttribute("service", pipeline.service)
